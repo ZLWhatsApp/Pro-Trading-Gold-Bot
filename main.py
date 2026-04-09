@@ -1,3 +1,5 @@
+import logging
+logging.basicConfig(level=logging.DEBUG)
 import telebot
 from telebot import types
 import sqlite3
