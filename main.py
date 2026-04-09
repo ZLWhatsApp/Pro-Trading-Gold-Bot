@@ -26,11 +26,18 @@ def start(message):
         markup.add(btn1, btn2, btn3, btn4)
         bot.send_message(message.chat.id, f"مرحباً بك {message.from_user.first_name} في ( TitanSignals ) بوت التداول الاحترافي! 💎\nاختر خدمتك من الأسفل:", reply_markup=markup)
     else:
-        markup = types.InlineKeyboardMarkup(row_width=1)
-        btn_ch = types.InlineKeyboardButton("1️⃣ اشترك في القناة", url=f"https://t.me/{CHANNEL_ID[1:]}")
-        btn_bot = types.InlineKeyboardButton("2️⃣ اشترك في البوت الداعم", url=OTHER_BOT_URL)
-        btn_check = types.InlineKeyboardButton("✅ تم الاشتراك، تفعيل البوت", callback_data='check')
-        markup.add(btn_ch, btn_bot, btn_check)
+        # تعديل توزيع الأزرار هنا (زرين بجانب بعض وزر تحتهم)
+        markup = types.InlineKeyboardMarkup()
+        
+        btn_ch = types.InlineKeyboardButton("1️⃣ القناة", url=f"https://t.me/{CHANNEL_ID[1:]}")
+        btn_bot = types.InlineKeyboardButton("2️⃣ البوت الداعم", url=OTHER_BOT_URL)
+        btn_check = types.InlineKeyboardButton("✅ تأكيد الاشتراك وتفعيل البوت", callback_data='check')
+        
+        # إضافة زر القناة والبوت الداعم في صف واحد
+        markup.row(btn_ch, btn_bot)
+        # إضافة زر التأكيد في صف مستقل تحتهم
+        markup.row(btn_check)
+        
         bot.send_message(message.chat.id, "⚠️ **تنبيه هام!**\nعذراً عزيزي، يجب عليك الاشتراك أولاً في القنوات الرسمية لاستخدام خدمات البوت:", reply_markup=markup, parse_mode="Markdown")
 
 @bot.callback_query_handler(func=lambda call: True)
